@@ -1,172 +1,179 @@
+/* الألوان الأساسية */
 :root {
   --primary-color: #4a89dc;
-  --primary-hover: #3a70c2;
-  --secondary-color: #e6f2ff;
+  --primary-dark: #3a70c2;
+  --secondary-color: #3bafda;
+  --accent-color: #37bc9b;
   --text-color: #2c3e50;
-  --background-color: #f5f7fa;
+  --light-text: #f5f7fa;
+  --background-color: #f8f9fa;
   --card-color: #ffffff;
   --error-color: #e74c3c;
   --success-color: #2ecc71;
+  --warning-color: #f6bb42;
+  --border-radius: 12px;
+  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* التنسيق العام */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Tajawal', sans-serif;
 }
 
 body {
-  font-family: 'Tajawal', 'Arial', sans-serif;
-  direction: rtl;
-  background: var(--background-color);
-  padding: 15px;
-  margin: 0;
+  background-color: var(--background-color);
   color: var(--text-color);
+  direction: rtl;
   min-height: 100vh;
-}
-
-* {
-  box-sizing: border-box;
+  line-height: 1.6;
 }
 
 .container {
-  max-width: 100%;
   width: 100%;
-  background: var(--card-color);
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 15px auto;
-  transition: all 0.3s ease;
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 600px;
-    padding: 30px;
-  }
-}
-
-input, button, select {
-  width: 100%;
-  padding: 12px 15px;
-  margin-top: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: all 0.3s;
-}
-
-input:focus, button:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(74, 137, 220, 0.2);
-}
-
-button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  letter-spacing: 0.5px;
-}
-
-button:hover {
-  background-color: var(--primary-hover);
-}
-
-button.secondary {
-  background-color: #95a5a6;
-}
-
-button.secondary:hover {
-  background-color: #7f8c8d;
-}
-
-h1, h2 {
-  color: var(--text-color);
-  text-align: center;
-  margin-top: 0;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
-.pharmacy-card {
-  background: var(--secondary-color);
-  padding: 15px;
-  border-radius: 8px;
-  margin: 15px 0;
-  border-left: 4px solid var(--primary-color);
+/* التصميم الدوائي */
+.pharmacy-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  padding: 15px 0;
+  box-shadow: var(--box-shadow);
 }
 
-.pharmacy-card strong {
-  font-size: 18px;
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.pharmacy-card button {
-  margin: 5px;
-  width: auto;
-  padding: 8px 15px;
+.logo {
+  width: 50px;
+  height: 50px;
 }
 
-#client-results, #requests {
-  max-height: 400px;
-  overflow-y: auto;
-  margin: 20px 0;
-  padding: 10px;
+.pharmacy-header h1 {
+  font-size: 24px;
+  font-weight: 700;
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-color: #5d9cec;
-    --primary-hover: #4a89dc;
-    --secondary-color: #2c3e50;
-    --text-color: #ecf0f1;
-    --background-color: #1a1a1a;
-    --card-color: #2d2d2d;
+.pharmacy-header h1 span {
+  color: var(--light-text);
+  font-weight: 500;
+}
+
+.header-icons {
+  display: flex;
+  gap: 15px;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* تصميم البطاقات الدوائية */
+.medicine-card {
+  background: var(--card-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.medicine-card:hover {
+  transform: translateY(-5px);
+}
+
+.medicine-image {
+  height: 180px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  font-size: 60px;
+}
+
+.medicine-details {
+  padding: 20px;
+}
+
+.medicine-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.medicine-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: #666;
+}
+
+.medicine-info i {
+  color: var(--primary-color);
+}
+
+/* تصميم الأزرار */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  text-align: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-color) 100%);
+  transform: translateY(-2px);
+}
+
+/* باقي التصميمات... */
+
+/* تأثيرات الحركة */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* التصميم للهواتف */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
   }
   
-  input, select {
-    background-color: #333;
-    color: white;
-    border-color: #444;
+  .pharmacy-header h1 {
+    font-size: 20px;
   }
-}
-
-/* Overlay for modal effect */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  background: var(--card-color);
-  border-radius: 12px;
-  padding: 20px;
-  width: 90%;
-  max-width: 500px;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-/* Loading spinner */
-.spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-  border-top: 4px solid var(--primary-color);
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  
+  .hero-content h2 {
+    font-size: 24px;
+  }
 }

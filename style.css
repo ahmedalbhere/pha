@@ -1,43 +1,87 @@
+:root {
+  --primary-color: #4a89dc;
+  --primary-hover: #3a70c2;
+  --secondary-color: #e6f2ff;
+  --text-color: #2c3e50;
+  --background-color: #f5f7fa;
+  --card-color: #ffffff;
+  --error-color: #e74c3c;
+  --success-color: #2ecc71;
+}
+
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Tajawal', 'Arial', sans-serif;
   direction: rtl;
-  background: #f0f0f0;
-  padding: 20px;
+  background: var(--background-color);
+  padding: 15px;
   margin: 0;
+  color: var(--text-color);
+  min-height: 100vh;
 }
 
-.container {
-  max-width: 500px;
-  margin: auto;
-  background: #fff;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
-  margin-bottom: 20px;
-}
-
-input, button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+* {
   box-sizing: border-box;
 }
 
+.container {
+  max-width: 100%;
+  width: 100%;
+  background: var(--card-color);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 15px auto;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 600px;
+    padding: 30px;
+  }
+}
+
+input, button, select {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+input:focus, button:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(74, 137, 220, 0.2);
+}
+
 button {
-  background-color: #2196f3;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
 button:hover {
-  background-color: #1976d2;
+  background-color: var(--primary-hover);
+}
+
+button.secondary {
+  background-color: #95a5a6;
+}
+
+button.secondary:hover {
+  background-color: #7f8c8d;
 }
 
 h1, h2 {
-  color: #333;
+  color: var(--text-color);
+  text-align: center;
+  margin-top: 0;
 }
 
 .hidden {
@@ -45,8 +89,84 @@ h1, h2 {
 }
 
 .pharmacy-card {
-  background: #e0f7fa;
+  background: var(--secondary-color);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  border-left: 4px solid var(--primary-color);
+}
+
+.pharmacy-card strong {
+  font-size: 18px;
+}
+
+.pharmacy-card button {
+  margin: 5px;
+  width: auto;
+  padding: 8px 15px;
+}
+
+#client-results, #requests {
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 20px 0;
   padding: 10px;
-  border-radius: 6px;
-  margin: 10px 0;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #5d9cec;
+    --primary-hover: #4a89dc;
+    --secondary-color: #2c3e50;
+    --text-color: #ecf0f1;
+    --background-color: #1a1a1a;
+    --card-color: #2d2d2d;
+  }
+  
+  input, select {
+    background-color: #333;
+    color: white;
+    border-color: #444;
+  }
+}
+
+/* Overlay for modal effect */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: var(--card-color);
+  border-radius: 12px;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Loading spinner */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid var(--primary-color);
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

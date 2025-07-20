@@ -2,7 +2,9 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>صيدلية أونلاين</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -16,25 +18,34 @@
 
   <div class="container hidden" id="client-login">
     <h2>تسجيل دخول العميل</h2>
-    <input type="text" id="client-name" placeholder="الاسم">
-    <input type="text" id="client-phone" placeholder="أدخل رقم الهاتف ا" maxlength="11">
-    <input type="text" id="client-city" placeholder="المدينة">
+    <input type="text" id="client-name" placeholder="الاسم" autocomplete="name">
+    <input type="tel" id="client-phone" placeholder="رقم الهاتف (11 رقم)" maxlength="11" autocomplete="tel">
+    <input type="text" id="client-city" placeholder="المدينة" autocomplete="address-level2">
+    <div>
+      <input type="checkbox" id="save-client-data">
+      <label for="save-client-data">حفظ بياناتي للمرة القادمة</label>
+    </div>
     <button onclick="loginClient()">دخول</button>
-    <button onclick="showSection('home-screen')">⬅️ رجوع</button>
+    <button class="secondary" onclick="showSection('home-screen')">⬅️ رجوع</button>
   </div>
 
   <div class="container hidden" id="pharmacy-login">
     <h2>تسجيل دخول الصيدلية</h2>
-    <input type="text" id="pharmacy-name" placeholder="اسم الصيدلية">
-    <input type="password" id="pharmacy-password" placeholder="كلمة المرور">
+    <input type="text" id="pharmacy-name" placeholder="اسم الصيدلية" autocomplete="organization">
+    <input type="password" id="pharmacy-password" placeholder="كلمة المرور" autocomplete="current-password">
+    <div>
+      <input type="checkbox" id="save-pharmacy-data">
+      <label for="save-pharmacy-data">تذكر بيانات الدخول</label>
+    </div>
     <button onclick="loginPharmacy()">دخول</button>
-    <button onclick="showSection('home-screen')">⬅️ رجوع</button>
+    <button class="secondary" onclick="showSection('home-screen')">⬅️ رجوع</button>
   </div>
 
   <div class="container hidden" id="pharmacy-panel">
     <h2>لوحة تحكم الصيدلية</h2>
-    <button onclick="toggleOpen()">تبديل الفتح/الإغلاق</button>
+    <button id="toggle-status-btn" onclick="toggleOpen()">تبديل الفتح/الإغلاق</button>
     <button onclick="showSection('change-password')">🔑 تغيير كلمة المرور</button>
+    <button class="secondary" onclick="logout()">تسجيل خروج</button>
     <div id="requests"></div>
   </div>
 
@@ -43,7 +54,7 @@
     <input type="password" id="old-password" placeholder="كلمة المرور القديمة">
     <input type="password" id="new-password" placeholder="كلمة المرور الجديدة">
     <button onclick="changePassword()">تأكيد التغيير</button>
-    <button onclick="showSection('pharmacy-panel')">⬅️ رجوع</button>
+    <button class="secondary" onclick="showSection('pharmacy-panel')">⬅️ رجوع</button>
   </div>
 
   <div class="container hidden" id="client-panel">
@@ -51,7 +62,7 @@
     <input type="text" id="search-medicine" placeholder="اسم الدواء">
     <button onclick="searchMedicine()">🔍 بحث</button>
     <div id="client-results"></div>
-    <button onclick="showSection('home-screen')">⬅️ تسجيل خروج</button>
+    <button class="secondary" onclick="logout()">⬅️ تسجيل خروج</button>
   </div>
 
   <script src="app.js"></script>

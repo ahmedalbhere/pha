@@ -8,87 +8,52 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
-
-  <div class="container">
-    <h1>تسجيل عميل</h1>
-    <input type="text" id="client-name" placeholder="الاسم">
-    <input type="text" id="client-phone" placeholder="رقم الهاتف">
-    <button onclick="registerClient()">تسجيل</button>
-
-    <hr>
-
-    <h1>تسجيل صيدلية</h1>
-    <input type="text" id="pharmacy-name" placeholder="اسم الصيدلية">
-    <input type="text" id="pharmacy-city" placeholder="المدينة">
-    <input type="text" id="pharmacy-location" placeholder="رابط اللوكيشن (Google Maps)">
-    <button onclick="registerPharmacy()">تسجيل</button>
-
-    <hr>
-
-    <h1>البحث عن دواء</h1>
-    <input type="text" id="search-medicine" placeholder="اسم الدواء">
-    <select id="search-city">
-      <option value="">اختر المدينة</option>
-      <option value="القاهرة">القاهرة</option>
-      <option value="الإسكندرية">الإسكندرية</option>
-    </select>
-    <button onclick="searchMedicine()">بحث</button>
-
-    <div id="search-results"></div>
+  <div class="container" id="home-screen">
+    <h1>أهلاً بك في منصة الصيدليات</h1>
+    <button onclick="showSection('client-login')">👤 دخول العميل</button>
+    <button onclick="showSection('pharmacy-login')">🏥 دخول الصيدلية</button>
   </div>
 
-  <script>
-    const firebaseConfig = {
-      databaseURL: "https://pharmase-9d8bc-default-rtdb.firebaseio.com/"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+  <div class="container hidden" id="client-login">
+    <h2>تسجيل دخول العميل</h2>
+    <input type="text" id="client-name" placeholder="الاسم">
+    <input type="text" id="client-phone" placeholder="أدخل رقم الهاتف ا" maxlength="11">
+    <input type="text" id="client-city" placeholder="المدينة">
+    <button onclick="loginClient()">دخول</button>
+    <button onclick="showSection('home-screen')">⬅️ رجوع</button>
+  </div>
 
-    function registerClient() {
-      const name = document.getElementById("client-name").value;
-      const phone = document.getElementById("client-phone").value;
-      const id = Date.now();
-      db.ref("clients/" + id).set({ name, phone });
-      alert("تم تسجيل العميل");
-    }
+  <div class="container hidden" id="pharmacy-login">
+    <h2>تسجيل دخول الصيدلية</h2>
+    <input type="text" id="pharmacy-name" placeholder="اسم الصيدلية">
+    <input type="password" id="pharmacy-password" placeholder="كلمة المرور">
+    <button onclick="loginPharmacy()">دخول</button>
+    <button onclick="showSection('home-screen')">⬅️ رجوع</button>
+  </div>
 
-    function registerPharmacy() {
-      const name = document.getElementById("pharmacy-name").value;
-      const city = document.getElementById("pharmacy-city").value;
-      const location = document.getElementById("pharmacy-location").value;
-      const id = Date.now();
-      localStorage.setItem("pharmacyId", id);
-      db.ref("pharmacies/" + id).set({ name, city, location, isOpen: true });
-      alert("تم تسجيل الصيدلية");
-      window.location.href = "admin.html";
-    }
+  <div class="container hidden" id="pharmacy-panel">
+    <h2>لوحة تحكم الصيدلية</h2>
+    <button onclick="toggleOpen()">تبديل الفتح/الإغلاق</button>
+    <button onclick="showSection('change-password')">🔑 تغيير كلمة المرور</button>
+    <div id="requests"></div>
+  </div>
 
-    function searchMedicine() {
-      const medicine = document.getElementById("search-medicine").value;
-      const city = document.getElementById("search-city").value;
-      const resultsDiv = document.getElementById("search-results");
-      resultsDiv.innerHTML = "جاري البحث...";
+  <div class="container hidden" id="change-password">
+    <h2>تغيير كلمة المرور</h2>
+    <input type="password" id="old-password" placeholder="كلمة المرور القديمة">
+    <input type="password" id="new-password" placeholder="كلمة المرور الجديدة">
+    <button onclick="changePassword()">تأكيد التغيير</button>
+    <button onclick="showSection('pharmacy-panel')">⬅️ رجوع</button>
+  </div>
 
-      db.ref("pharmacies").on("value", (snap) => {
-        const data = snap.val();
-        let output = "";
-        for (let id in data) {
-          const p = data[id];
-          if (
-            p.city === city &&
-            p.isOpen &&
-            p.medicines &&
-            p.medicines[medicine] === "available"
-          ) {
-            output += `<div class="pharmacy-card">
-              <strong>${p.name}</strong><br>
-              <a href="${p.location}" target="_blank">رابط اللوكيشن</a>
-            </div>`;
-          }
-        }
-        resultsDiv.innerHTML = output || "لا توجد نتائج.";
-      });
-    }
-  </script>
+  <div class="container hidden" id="client-panel">
+    <h2>مرحبا بك 👋</h2>
+    <input type="text" id="search-medicine" placeholder="اسم الدواء">
+    <button onclick="searchMedicine()">🔍 بحث</button>
+    <div id="client-results"></div>
+    <button onclick="showSection('home-screen')">⬅️ تسجيل خروج</button>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>

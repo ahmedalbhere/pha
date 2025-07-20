@@ -1,48 +1,52 @@
 body {
   font-family: 'Arial', sans-serif;
   direction: rtl;
-  background: #f9f9f9;
-  margin: 0;
+  background: #f0f0f0;
   padding: 20px;
+  margin: 0;
 }
 
 .container {
-  max-width: 600px;
+  max-width: 500px;
   margin: auto;
   background: #fff;
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 0 10px #ccc;
+  margin-bottom: 20px;
 }
 
-h1, h2 {
-  color: #333;
-  margin-bottom: 15px;
-}
-
-input, select, button {
+input, button {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  border-radius: 5px;
+  margin-top: 10px;
   border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
 button {
-  background-color: #0288d1;
+  background-color: #2196f3;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0277bd;
+  background-color: #1976d2;
+}
+
+h1, h2 {
+  color: #333;
+}
+
+.hidden {
+  display: none;
 }
 
 .pharmacy-card {
   background: #e0f7fa;
   padding: 10px;
   border-radius: 6px;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>صيدلية أونلاين</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <h1>تسجيل عميل</h1>
+    <input type="text" id="client-name" placeholder="الاسم">
+    <input type="text" id="client-phone" placeholder="رقم الهاتف">
+    <button onclick="registerClient()">تسجيل</button>
+
+    <hr>
+
+    <h1>تسجيل صيدلية</h1>
+    <input type="text" id="pharmacy-name" placeholder="اسم الصيدلية">
+    <input type="text" id="pharmacy-city" placeholder="المدينة">
+    <input type="text" id="pharmacy-location" placeholder="رابط اللوكيشن (Google Maps)">
+    <button onclick="registerPharmacy()">تسجيل</button>
+
+    <hr>
+
+    <h1>البحث عن دواء</h1>
+    <input type="text" id="search-medicine" placeholder="اسم الدواء">
+    <select id="search-city">
+      <option value="">اختر المدينة</option>
+      <option value="القاهرة">القاهرة</option>
+      <option value="الإسكندرية">الإسكندرية</option>
+    </select>
+    <button onclick="searchMedicine()">بحث</button>
+
+    <div id="search-results"></div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      databaseURL: "https://pharmase-9d8bc-default-rtdb.firebaseio.com/"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function registerClient() {
+      const name = document.getElementById("client-name").value;
+      const phone = document.getElementById("client-phone").value;
+      const id = Date.now();
+      db.ref("clients/" + id).set({ name, phone });
+      alert("تم تسجيل العميل");
+    }
+
+    function registerPharmacy() {
+      const name = document.getElementById("pharmacy-name").value;
+      const city = document.getElementById("pharmacy-city").value;
+      const location = document.getElementById("pharmacy-location").value;
+      const id = Date.now();
+      localStorage.setItem("pharmacyId", id);
+      db.ref("pharmacies/" + id).set({ name, city, location, isOpen: true });
+      alert("تم تسجيل الصيدلية");
+      window.location.href = "admin.html";
+    }
+
+    function searchMedicine() {
+      const medicine = document.getElementById("search-medicine").value;
+      const city = document.getElementById("search-city").value;
+      const resultsDiv = document.getElementById("search-results");
+      resultsDiv.innerHTML = "جاري البحث...";
+
+      db.ref("pharmacies").on("value", (snap) => {
+        const data = snap.val();
+        let output = "";
+        for (let id in data) {
+          const p = data[id];
+          if (
+            p.city === city &&
+            p.isOpen &&
+            p.medicines &&
+            p.medicines[medicine] === "available"
+          ) {
+            output += `<div class="pharmacy-card">
+              <strong>${p.name}</strong><br>
+              <a href="${p.location}" target="_blank">رابط اللوكيشن</a>
+            </div>`;
+          }
+        }
+        resultsDiv.innerHTML = output || "لا توجد نتائج.";
+      });
+    }
+  </script>
+</body>
+</html>
